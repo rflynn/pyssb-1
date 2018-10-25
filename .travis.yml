@@ -1,10 +1,20 @@
-dist: trusty
-sudo: required
 language: python
-python:
-  - "3.5"
-  - "3.6.7"
-  - "3.7.1"
+
+matrix:
+    include:
+        - os: linux
+          sudo: required
+          python: 3.5
+        - os: linux
+          sudo: required
+          python: 3.6.7
+# Recent Python branches require OpenSSL 1.0.2+. As this library is not available for Trusty, 3.7, 3.7-dev, 3.8-dev, and nightly do not work (or use outdated archive).
+# ref: https://docs.travis-ci.com/user/languages/python/
+
+        - os: osx
+          sudo: required
+          python: 3.7-dev
+
 install:
     - pip install .[tests]
     - pip install coveralls
